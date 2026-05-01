@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bollywood Love Story Animation</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: "Arial", sans-serif;
+      background: linear-gradient(to top, #2c3e50, #3498db);
+    }
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .sky {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(to top, #ff9a9e, #fad0c4);
+      z-index: 1;
+    }
+    .city {
+      position: absolute;
+      bottom: 30%;
+      width: 200%;
+      height: 40%;
+      background: url("https://i.ibb.co/G3z4Qf4/city-skyline.png") repeat-x;
+      background-size: cover;
+      animation: moveCity 30s linear infinite;
+      z-index: 2;
+    }
+    @keyframes moveCity {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .road {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 30%;
+      background: #2c3e50;
+      z-index: 3;
+    }
+    .character {
+      position: absolute;
+      bottom: 10%;
+      height: 300px;
+      z-index: 5;
+      animation: walk 1s infinite;
+    }
+    @keyframes walk {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .boy { left: -200px; animation: walk 1s infinite, moveBoy 60s linear forwards; }
+    .girl { right: -200px; animation: walk 1s infinite, moveGirl 60s linear forwards; }
+    @keyframes moveBoy {
+      0% { left: -200px; }
+      50% { left: 40%; }
+      100% { left: 40%; }
+    }
+    @keyframes moveGirl {
+      0% { right: -200px; }
+      50% { right: 40%; }
+      100% { right: 40%; }
+    }
+    .dialogue {
+      position: absolute;
+      bottom: 20%;
+      width: 100%;
+      text-align: center;
+      font-size: 24px;
+      color: #fff;
+      text-shadow: 2px 2px 5px #000;
+      opacity: 0;
+      transition: opacity 2s;
+      z-index: 10;
+    }
+    .hearts {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 20;
+    }
+    .heart {
+      position: absolute;
+      bottom: 0;
+      width: 30px;
+      height: 30px;
+      background: url("https://i.ibb.co/7zZ2z9h/heart.png") no-repeat center/contain;
+      animation: float 6s linear infinite;
+    }
+    @keyframes float {
+      from { transform: translateY(100%); opacity: 1; }
+      to { transform: translateY(-100%); opacity: 0; }
+    }
+    .end {
+      position: absolute;
+      top: 40%;
+      width: 100%;
+      text-align: center;
+      font-size: 48px;
+      font-weight: bold;
+      color: #fff;
+      opacity: 0;
+      z-index: 30;
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="sky"></div>
+    <div class="city"></div>
+    <div class="road"></div>
+    <img src="https://i.pinimg.com/474x/56/d8/d3/56d8d3b46b5d6d415b52b010be3f4dc2.jpg" class="character boy">
+    <img src="https://png.pngtree.com/png-vector/20240728/ourmid/pngtree-animated-cute-girl-png-image_13270589.png" class="character girl">
+    <div id="dialogue" class="dialogue"></div>
+    <div class="hearts" id="hearts"></div>
+    <div class="end" id="end">💖 THE END – Ek Prem Kahani 💖</div>
+  </div>
+
+  <audio autoplay loop>
+    <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
+  </audio>
+
+  <script>
+    const dialogue = document.getElementById("dialogue");
+    const hearts = document.getElementById("hearts");
+    const end = document.getElementById("end");
+
+    const dialogues = [
+      "👦: Tumhari aankhon mein kuch aisa hai... jo pehli baar dekh kar hi dil chura le gaya.",
+      "👧: Aur tumhari muskaan... jaise dhoop mein khilta hua phool.",
+      "👦: Kabhi socha nahi tha... ek din tum jaise haseen humsafar milegi.",
+      "👧: Aur maine bhi kabhi socha nahi tha... ki itna sachha pyaar milega.",
+      "👦: Sheher ki raatein, galiyan... sab tumhare saath aur bhi khoobsurat lagti hain.",
+      "👧: Mere liye toh tum ho... aur tumhare saath sab kuch apna lagta hai.",
+      "👦: Jab tum paas hoti ho... dil tez dhadakne lagta hai.",
+      "👧: Aur jab tum door jaate ho... lagta hai jaise saans ruk gayi ho.",
+      "👦: Shayad... yahi toh pyaar hai.",
+      "👧: Haan... aur main chahti hoon yeh pyaar hamesha rahe.",
+      "👦: Mujhe tumse kuch kehna hai... Tum meri zindagi ho, mera junoon ho.",
+      "👧: Aur tum meri duaon ka jawaab... mera sapna ho.",
+      "👦: Kya tum meri zindagi ka hissa banogi? Hamesha ke liye...",
+      "👧: Haan... main tumhari thi, tumhari hoon... aur hamesha tumhari rahungi ❤️",
+      "👦: Ab chaand sitare bhi humse jalenge...",
+      "👧: Aur humari kahani duniya ka sabse khoobsurat geet banegi...",
+      "👦: Tum meri humsafar ho... aur rahogi... aakhri saans tak.",
+      "👧: Hamesha... sirf tum ❤️"
+    ];
+
+    let i = 0;
+    function showDialogue() {
+      if (i < dialogues.length) {
+        dialogue.innerText = dialogues[i];
+        dialogue.style.opacity = 1;
+        setTimeout(() => {
+          dialogue.style.opacity = 0;
+          i++;
+          setTimeout(showDialogue, 2000);
+        }, 5000);
+      } else {
+        // Hearts animation
+        for (let j = 0; j < 30; j++) {
+          let h = document.createElement("div");
+          h.className = "heart";
+          h.style.left = Math.random() * 100 + "%";
+          h.style.animationDelay = Math.random() * 5 + "s";
+          hearts.appendChild(h);
+        }
+        setTimeout(() => { end.style.opacity = 1; }, 4000);
+      }
+    }
+    setTimeout(showDialogue, 4000);
+  </script>
+</body>
+</html>
