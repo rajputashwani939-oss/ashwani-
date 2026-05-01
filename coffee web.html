@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Website</title>
+    <!--Link Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: #2c1810;
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .nav-logo h2 {
+            font-size: 0.9rem;
+            color: #d4a574;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #d4a574;
+        }
+
+        #menu-open-button, #menu-close-button {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 100px;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 100%);
+            color: white;
+            padding: 80px 0;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-section .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .title {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #d4a574;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .button {
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .order-now {
+            background: #d4a574;
+            color: #2c1810;
+        }
+
+        .contact-us {
+            background: transparent;
+            color: white;
+            border: 2px solid #d4a574;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Section Styles */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c1810;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 80px 0;
+            background: #f8f8f8;
+        }
+
+        .about-section .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .social-link-list {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: #2c1810;
+            color: white;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: #d4a574;
+            transform: translateY(-3px);
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 80px 0;
+        }
+
+        .menu-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .menu-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menu-item .name {
+            padding: 1rem;
+            font-size: 1.3rem;
+            color: #2c1810;
+        }
+
+        .menu-item .text {
+            padding: 0 1rem 1rem;
+            margin: 0;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 80px 0;
+            background: #f8f8f8;
+        }
+
+        .testimonials-list {
+            list-style: none;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .user-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial .name {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #2c1810;
+        }
+
+        .feedback {
+            font-style: italic;
+            color: #666;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 80px 0;
+        }
+
+        .gallery-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .gallery-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Offer Section */
+        .offer-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #d4a574 0%, #b8935f 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .offer-section .section-title {
+            color: white;
+            font-size: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .offer-description {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            font-weight: bold;
+        }
+
+        .offer-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .offer-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 5px solid white;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .offer-image:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .offer-badge {
+            position: relative;
+            display: inline-block;
+        }
+
+        .offer-badge::before {
+            content: "50% OFF";
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            z-index: 2;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+            background: #f8f8f8;
+        }
+
+        .contact-section .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info-list {
+            list-style: none;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .contact-info i {
+            color: #d4a574;
+            font-size: 1.2rem;
+            width: 25px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-input {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #d4a574;
+        }
+
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            padding: 15px;
+            background: #2c1810;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-button:hover {
+            background: #d4a574;
+        }
+
+        /* Footer */
+        .footer-section {
+            background: #2c1810;
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-section .section-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .policy-text a {
+            color: #d4a574;
+            text-decoration: none;
+        }
+
+        .separator {
+            margin: 0 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            #menu-open-button {
+                display: block;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100vh;
+                background: #2c1810;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: left 0.3s;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            #menu-close-button {
+                display: block;
+                position: absolute;
+                top: 2rem;
+                right: 2rem;
+            }
+
+            .hero-section .section-content,
+            .about-section .section-content,
+            .contact-section .section-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .buttons {
+                justify-content: center;
+            }
+
+            .menu-list {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-list {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .offer-images {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-section .section-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navbar -->
+    <header>
+        <nav class="navbar section-content">
+            <a href="#" class="nav-logo">
+                <h1 class="logo-text">👩‍🍳MR SINGH</h1>
+                <h2>A DAY MAKER COFFEE</h2>
+
+            </a>
+            <ul class="nav-menu">
+                <button id="menu-close-button" class="fas fa-times"></button>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>              
+                <li class="nav-item">
+                    <a href="#menu" class="nav-link">Menu</a>
+                </li>            
+                <li class="nav-item">
+                    <a href="#testimonials" class="nav-link">Testimonials</a>
+                </li>             
+                <li class="nav-item">
+                    <a href="#gallery" class="nav-link">Gallery</a>
+                </li>             
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#offers" class="nav-link">Offers</a>
+                </li>
+            </ul> 
+            <button id="menu-open-button" class="fas fa-bars"></button>
+        </nav>
+    </header>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="section-content">
+                <div class="hero-details">
+                    <h2 class="title">Best Coffee</h2>
+                    <h3 class="subtitle">Make your day wonderful with our coffee</h3>
+                    <p class="description">Welcome to our coffee paradise, where every bean tells a story and every cup sparks joy.</p>
+                    <div class="buttons">
+                        <a href="#" class="button order-now">Order Now</a>
+                        <a href="#" class="button contact-us">Contact Us</a>
+                    </div>
+                </div>
+                <div class="hero-wrapper">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e569427c-5fc5-496b-ba88-3a12139a04eb.png" alt="Steaming hot coffee cup with aromatic coffee beans scattered around on a rustic wooden table in warm morning light" class="hero-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+
+        <section class="about-section" id="about">
+            <div class="section-content">
+                <div class="about-image-wrapper">  
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3afc5847-513e-4d69-980f-390be45b7fab.png" alt="Cozy coffee shop interior with comfortable seating, warm lighting, and baristas working behind an espresso machine" class="about-image">
+                </div>
+                <div class="about-details">
+                    <h2 class="section-title">🍻 𝓐𝓫𝓸𝓾𝓽 𝓾𝓼 🍵</h2>
+                <p class="text"> Our Coffee Restaurant App is designed to give users a smooth and enjoyable coffee ordering experience. With this app, customers can explore our wide range of coffees, snacks, and desserts anytime and anywhere.</p>
+
+                <p class="text">The app allows users to view the menu, place orders easily, and stay updated with special offers and discounts. We focus on providing high-quality coffee with fast and reliable service.</p>
+
+                <p class="text">Our goal is to create a comfortable digital space where coffee lovers can enjoy their favorite beverages with just a few clicks. Customer satisfaction and quality service are our top priorities.</p>
+                    <div class="social-link-list">
+                        <a href="#" class="social-link"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fa-brands fa-twitter"></i></a>    
+                    </div>
+                </div>
+            </div> 
+        </section>
+
+        <!-- Menu Section -->
+        <section class="menu-section" id="menu">
+            <h2 class="section-title">𝓐𝓸𝓾𝓻 𝓶𝓮𝓷𝓾</h2>
+            <div class="section-content">
+                <ul class="menu-list">
+                    <li class="menu-item">        
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/18ba58b6-f2cc-474f-98b1-b182ef04c6f1.png" alt="Golden crispy French fries served in a rustic basket with fresh herbs and dipping sauces" class="menu-image">
+                        <h3 class="name">Hot Beverages</h3>
+                        <p class="text">Wide range of steaming hot beverages to make you fresh and light.</p>
+                    </li>
+
+                    <li class="menu-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/47bbb46f-db79-46bf-adf6-efc43805cb4f.png" alt="Refreshing iced coffee drinks with whipped cream, ice cubes, and colorful straws in tall glasses" class="menu-image">
+                        <h3 class="name">Cold Beverages</h3>
+                        <p class="text">Wide range of refreshing cold coffee to make you fresh and light.</p>
+                    </li>
+
+                    <li class="menu-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9ac5baa6-0c5a-4056-b573-1a9593288663.png" alt="Decadent desserts including chocolate cake, pastries, and sweet treats beautifully arranged on elegant plates" class="menu-image">
+                        <h3 class="name">Desserts</h3>
+                        <p class="text">Wide range of delicious desserts to make you fresh and light.</p>
+                    </li> 
+
+                    <li class="menu-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/849cd8d5-1ad7-4795-9b1e-c5c450fa4e8a.png" alt="Steaming hot coffee beverages including cappuccino, latte, and espresso with artistic latte art" class="menu-image">
+                        <h3 class="name">Hot coffee</h3>
+                        <p class="text">Wide range of steaming hot beverages to make you fresh and light.</p>
+                    </li>
+
+                    <li class="menu-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/591f2bc5-e2ac-4a22-a798-57c9dc3b8eb5.png" alt="Fresh fruit juices, smoothies, and healthy refreshment drinks in colorful glasses with fruit garnishes" class="menu-image">
+                        <h3 class="name">Refreshments</h3>
+                        <p class="text">Wide range of healthy refreshments to make you fresh and light.</p>
+                    </li> 
+
+                    <li class="menu-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/81a2c9fe-3fe6-41dc-9568-9355b027d09f.png" alt="Special combo meals with coffee, pastries, and snacks artfully arranged on wooden serving boards" class="menu-image">
+                        <h3 class="name">Special Combos</h3>
+                        <p class="text">Wide range of special combos to make you fresh and light.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials-section" id="testimonials">
+            <h2 class="section-title">𝓣𝓮𝓼𝓽𝓲𝓶𝓸𝓷𝓲𝓪𝓵𝓼</h2>
+            <div class="section-content">
+                <div class="slider-content swiper">
+                    <div class="slider-wrapper swiper-wrapper">
+                        <div class="testimonial swiper-slide">
+                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQxmaa5SfloNT6l114ybSjOy8zE4nlcwU3rw4UIcN-9Q2HpbKd9lVhHor_mhw2_FLxVfFVulUeHCJQ2PmpZqOVGcd1GJXNpNB58XUMjImXj" alt="Professional portrait of Ratan tata, a satisfied customer with a warm smile" class="user-image">
+                            <h3 class="name">Ratan tata</h3>
+                            <i class="feedback">"Loved the French roast. Perfectly balanced and rich. Will order again!"</i>
+                        </div>
+                        <div class="testimonial swiper-slide">
+                            <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSBmOAuALyu-MdPIq6e91VQmu0dx43RcqthzDncztR6xDU7akxzWerH2vA_M9JSSbR4yZbv2HLzRO1AOuYJiSncPoNK7FCAI7fvIjrMA4HVHQ" alt="Professional portrait of Shiv Nadar, a happy customer with a friendly expression" class="user-image">
+                            <h3 class="name">Shiv Nadar</h3>
+                            <i class="feedback">"Amazing coffee! The best I've ever had!"</i>
+                        </div>
+                        <div class="testimonial swiper-slide">
+                            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTI4uQD1rZpUp53SngDeUHEihE_mrM0dLDQDQQr9C5LBib3izdpkgCrJRtMEB10t20hvX0HvgzEoecRXLk47WWC6dFQEnwoWyZbp2EzxyZ2" alt="Professional portrait of Anil Agarwal, a delighted customer with a bright smile" class="user-image">
+                            <h3 class="name">Anil Agarwal</h3>
+                            <i class="feedback">"Great atmosphere and even better coffee!"</i>
+                        </div>
+                        <div class="testimonial swiper-slide">
+                            <img src="https://www.ey.com/adobe/dynamicmedia/deliver/dm-aid--d4d91cb4-e126-46b7-a8bd-6a3cd26b510e/ey-dilip-shangvi.jpg?preferwebp=true&width=1600&quality=85"  alt="Professional portrait of dilip-shangvi, a delighted customer with a bright smile"class="user-image">
+                            <h3 class="name">Dilip Shanghvi</h3>
+                            <i class="feedback">"I love the variety of options available!"</i>
+                        </div>
+                        <div class="testimonial swiper-slide">
+                            <img src="https://femina.wwmindia.com/content/2022/nov/falguni-nayar-thumnail1668423875.jpg" alt="Professional portrait of Falguni Nadar, a happy customer with an enthusiastic expression" class="user-image">
+                            <h3 class="name">Falguni Nayar</h3>
+                            <i class="feedback">"The best coffee shop in town!"</i>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                   <!--<div class="swiper-button-privew"></div>
+                   margin-bottom:50px 
+                   padding:1px 2px 3px 4px -->
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section class="gallery-section" id="gallery">
+            <h2 class="section-title">𝓖𝓪𝓵𝓵𝓮𝓻𝔂</h2>
+            <div class="section-content">
+                <ul class="gallery-list">
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/882fe910-85cc-4478-9187-0a4e39652b31.png" alt="Beautifully crafted latte with intricate foam art in a ceramic cup on a marble table" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/53f81551-173f-414c-9e64-a0cd8a524649.png" alt="Coffee beans being roasted in a traditional roasting machine with warm golden lighting" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/97abccca-80dc-4df8-bc8d-b6277263365b.png" alt="Elegant coffee shop storefront with large windows, warm lighting, and inviting outdoor seating" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b6fd485c-7ac0-4fc1-813e-1e57cb055a24.png" alt="Barista expertly preparing espresso with professional equipment in a modern coffee shop" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b96b85bc-6fda-456f-9ce3-b6592b331a9b.png" alt="Assorted coffee beverages and pastries beautifully arranged on a rustic wooden table" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1a7fd0c4-73aa-488e-84d4-ba7519533eeb.png" alt="Cozy reading corner in the coffee shop with comfortable chairs, books, and warm ambient lighting" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/95555f05-6d78-492e-a3e3-126474d7fdb1.png" alt="Fresh coffee beans scattered artistically with vintage coffee grinder and brewing equipment" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/1a54acc7-ba0d-47e1-84c3-62dfa3dfd5f1.png" alt="Group of friends enjoying coffee and conversation in a vibrant, welcoming coffee shop atmosphere" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b88250b4-00fc-46d1-9ea2-772fdc1442a5.png" alt="Artisanal coffee brewing process with pour-over method showcasing precision and craftsmanship" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4a3877f5-aa49-4fe1-9b76-5184cf461472.png" alt="Seasonal coffee menu display with colorful chalk art and creative typography" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/728f117d-25a8-461d-8608-af9ed313d2c6.png" alt="Coffee shop staff preparing multiple orders with enthusiasm and professional expertise" class="gallery-image">
+                    </li>
+                    <li class="gallery-item">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9af68177-675c-4194-8b5a-812c46163d91.png" alt="Evening coffee shop ambiance with soft lighting, comfortable seating, and relaxed atmosphere" class="gallery-image">
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Offer Section -->
+
+        <section class="offer-section" id="offers">
+            <h2 class="section-title">𝓢𝓹𝓮𝓬𝓲𝓪𝓵 𝓞𝓯𝓯𝓮𝓻𝓼</h2>
+            <div class="section-content">
+                <p class="offer-description">Enjoy Amazing 50% Discount on Selected Items!</p>
+                <div class="offer-images">
+                    <div class="offer-badge">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/14c2b814-044e-4b0c-826e-fc600a2d0160.png" alt="Premium coffee gift set with elegant packaging, gourmet beans, and exclusive brewing accessories with 50% discount offer" class="offer-image">
+                    </div>
+                    <div class="offer-badge">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ba21a02e-23df-4986-b59c-ff8541cee07b.png" alt="Deluxe breakfast combo with fresh pastries, artisanal coffee, and seasonal fruits at special promotional price" class="offer-image">
+                    </div>
+                    <div class="offer-badge">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/19bde1af-d963-4bb1-bc1a-77707b5ada56.png" alt="Limited time specialty drinks collection featuring exotic flavors and premium ingredients at discounted rates" class="offer-image">
+                    </div>
+                     <div class="offer-badge">
+                        <img src="https://media.assettype.com/homegrown%2F2024-11-28%2Fd8kdthmm%2FWhatsApp-Image-2024-11-27-at-16.08.06.jpeg?w=480&auto=format%2Ccompress    " alt="Limited time specialty drinks collection featuring exotic flavors and premium ingredients at discounted rates" class="offer-image">
+                    </div>
+                     <div class="offer-badge">
+                        <img src="https://www.eatingwell.com/thmb/m5xUzIOmhWSoXZnY-oZcO9SdArQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/article_291139_the-top-10-healthiest-foods-for-kids_-02-4b745e57928c4786a61b47d8ba920058.jpg  " alt="Limited time specialty drinks collection featuring exotic flavors and premium ingredients at discounted rates" class="offer-image">
+                    </div>
+                     <div class="offer-badge">
+                        <img src="https://media.cnn.com/api/v1/images/stellar/prod/160513122125-man-eating-hamburger-tease.jpg?q=w_1110,c_fill  " alt="Limited time specialty drinks collection featuring exotic flavors and premium ingredients at discounted rates" class="offer-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+
+        <section class="contact-section" id="contact">
+            <h2 class="section-title">𝓒𝓸𝓷𝓽𝓪𝓬𝓽 𝓾𝓼</h2>
+            <div class="section-content">
+                <ul class="contact-info-list">
+                    <li class="contact-info">
+                        <i class="fa-solid fa-location-crosshairs"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>274301 GKP Park, Road Gandhi Nagar Plot No 243</p>
+                        </div>
+                    </li>
+                    <li class="contact-info">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>sashwanisingh2004@gmail.com</p>
+                        </div>
+                    </li>
+                    <li class="contact-info">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <h4>Contact No</h4>
+                            <p>8960317848</p>
+                        </div>
+                    </li>
+                    <li class="contact-info">
+                        <i class="fa-solid fa-clock"></i>
+                        <div>
+                            <h4>Operating Hours</h4>
+                            <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                            <p>Saturday: 10:00 AM - 4:00 PM</p>
+                            <p>Sunday: Closed</p>
+                        </div>
+                    </li>
+                    <li class="contact-info">
+                        <i class="fa-solid fa-globe"></i>
+                        <div>
+                            <h4>Website</h4>
+                            <p>www.aswani.com</p>
+                        </div>
+                    </li>   
+                </ul>
+
+                <form action="#" class="contact-form">
+                    <input type="text" placeholder="Your Name" class="form-input" required>
+                    <input type="email" placeholder="Your Email" class="form-input" required>
+                    <textarea placeholder="Your Message" class="form-input" required></textarea>
+                    <button class="submit-button">Submit</button>
+                </form>
+            </div>
+        </section>
+ 
+        <!-- Footer Section --> 
+
+        <footer class="footer-section">
+            <div class="section-content">
+                <p class="copyright-text">© 2024 Mr singh Coffee Shop</p>
+                <div class="social-link-list">
+                    <a href="#" class="social-link"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fa-brands fa-twitter"></i></a>    
+                </div>
+                <p class="policy-text">
+                    <a href="#" class="policy-link">Privacy Policy</a>
+                    <span class="separator">•</span>
+                    <a href="#" class="policy-link">Refund Policy</a>
+                </p>
+            </div>
+        </footer> 
+    </main>
+
+    <!-- Linking Swiper Script -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Mobile Menu Toggle
+        const menuOpenButton = document.getElementById('menu-open-button');
+        const menuCloseButton = document.getElementById('menu-close-button');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuOpenButton.addEventListener('click', () => {
+            navMenu.classList.add('active');
+        });
+
+        menuCloseButton.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+        });
+
+        // Close menu when clicking on nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Initialize Swiper for testimonials
+        const swiper = new Swiper('.swiper', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 30,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 40,
+                },
+            },
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+
+        // Add scroll effect to navbar
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(44, 24, 16, 0.95)';
+            } else {
+                header.style.background = '#2c1810';
+            }
+        });
+    </script>
+</body>
+</html>
+
